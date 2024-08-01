@@ -6,6 +6,14 @@
     </h1>
 
     <div class="flex flex-col items-center gap-5 justify-center">
+      @if(authService.getUserDetail()){
+      <h1 class="text-2">
+        Tu has iniciado sesion como
+        <span class="font-bold bg-blue-600 rounded-md p-2 text-white">
+          {{ authService.getUserDetail()?.fullName }}
+        </span>
+      </h1>
+      }@else {
       <h1 class="text-2xl">Tu no has iniciado sesion</h1>
       <a routerLink="/login">
         <button
@@ -14,6 +22,7 @@
           Login
         </button>
       </a>
+      }
     </div>
   </div>
 </div>

@@ -2,3 +2,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custom-snackbar.mat-snack-bar-container {
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+}

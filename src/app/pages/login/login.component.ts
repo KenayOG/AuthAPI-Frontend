@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
         this.matSnackBar.open(response.message, 'Close', {
           duration: 5000,
           horizontalPosition: 'center',
+          verticalPosition: 'top',
         });
         this.router.navigate(['/']);
       },
@@ -44,6 +45,7 @@ export class LoginComponent implements OnInit {
         this.matSnackBar.open(error.error.message, 'Close', {
           duration: 5000,
           horizontalPosition: 'center',
+          verticalPosition: 'top',
         });
       },
     });
