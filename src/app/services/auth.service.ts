@@ -73,9 +73,9 @@ export class AuthService {
     const token = this.getToken();
     if (!token) return null;
 
-    const decodedToken:any = jwtDecode(token);
+    const decodedToken: any = jwtDecode(token);
     return decodedToken.role || null;
-  }
+  };
 
   getAll = (): Observable<UserDetail[]> =>
     this.http.get<UserDetail[]>(`${this.apiUrl}account`);
