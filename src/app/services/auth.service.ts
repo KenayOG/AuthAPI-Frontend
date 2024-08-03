@@ -97,5 +97,12 @@ export class AuthService {
   getAllSelect = (): Observable<UserDetailAll[]> =>
     this.http.get<UserDetailAll[]>(`${this.apiUrl}account/all`);
 
+  refreshToken = (data: {
+    email: string;
+    token: string;
+    refreshToken: string;
+  }): Observable<AuthResponse> =>
+    this.http.post<AuthResponse>(`${this.apiUrl}account/refresh-token`, data);
+
   getToken = (): string | null => localStorage.getItem(this.tokenKey) || '';
 }
