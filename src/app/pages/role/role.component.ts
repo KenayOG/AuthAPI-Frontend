@@ -5,7 +5,7 @@ import { RoleCreateRequest } from '../../interfaces/role-create-request';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RoleListComponent } from '../../components/role-list/role-list.component';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../services/auth.service';
@@ -20,6 +20,7 @@ import { AuthService } from '../../services/auth.service';
     MatInputModule,
     AsyncPipe,
     RoleListComponent,
+    CommonModule,
   ],
   templateUrl: './role.component.html',
   styleUrl: './role.component.css',
@@ -31,8 +32,8 @@ export class RoleComponent {
   role: RoleCreateRequest = {} as RoleCreateRequest;
   roles$ = this.roleService.getRoles();
   users$ = this.authService.getAll();
-  selectedUser:string='';
-  selectedRole:string='';
+  selectedUser: string = '';
+  selectedRole: string = '';
   snackBar = inject(MatSnackBar);
   createRole(role: RoleCreateRequest) {
     this.roleService.createRole(role).subscribe({
@@ -72,23 +73,46 @@ export class RoleComponent {
     });
   }
 
+  /* assignRole() {
+    this.roleService
+      .assignRole(this.selectedUser, this.selectedRole)
+      .subscribe({
+        next: (response) => {
+          this.roles$ = this.roleService.getRoles();
+          this.snackBar.open('Rol borrado exitosamente', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+          });
+        },
+        error: (error: HttpErrorResponse) => {
+          this.snackBar.open(error.message, 'Close', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+          });
+        },
+      });
+  } */
   assignRole() {
-    this.roleService.assignRole(this.selectedUser,this.selectedRole).subscribe({
-      next: (response) => {
-        this.roles$ = this.roleService.getRoles();
-        this.snackBar.open('Rol borrado exitosamente', 'Close', {
-          duration: 3000,
-          verticalPosition: 'top',
-          horizontalPosition: 'center',
-        });
-      },
-      error: (error: HttpErrorResponse) => {
-        this.snackBar.open(error.message, 'Close', {
-          duration: 3000,
-          verticalPosition: 'top',
-          horizontalPosition: 'center',
-        });
-      },
-    });
+    this.roleService
+      .assignRole(this.selectedUser, this.selectedRole)
+      .subscribe({
+        next: (response) => {
+          this.roles$ = this.roleService.getRoles();
+          this.snackBar.open('Rol asignado exitosamente', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+          });
+        },
+        error: (error: HttpErrorResponse) => {
+          this.snackBar.open(error.message, 'Close', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+          });
+        },
+      });
   }
 }

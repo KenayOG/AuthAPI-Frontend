@@ -7,6 +7,9 @@ import { HttpClient } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
 import { RegisterRequest } from '../interfaces/register-request';
 import { UserDetail } from '../interfaces/user-detail';
+import { UserDetailAll } from '../interfaces/user-detail-all';
+import { ResetPasswordRequest } from '../interfaces/reset-password-request';
+import { ChangePasswordRequest } from '../interfaces/change-password-request';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +38,17 @@ export class AuthService {
 
   getDetail = (): Observable<UserDetail> =>
     this.http.get<UserDetail>(`${this.apiUrl}account/detail`);
+
+  forgotPassword = (email: string): Observable<AuthResponse> =>
+    this.http.post<AuthResponse>(`${this.apiUrl}account/forgot-password`, {
+      email,
+    });
+
+  resetPassword = (data: ResetPasswordRequest): Observable<AuthResponse> =>
+    this.http.post<AuthResponse>(`${this.apiUrl}account/reset-password`, data);
+
+  changePassword = (data: ChangePasswordRequest): Observable<AuthResponse> =>
+    this.http.post<AuthResponse>(`${this.apiUrl}account/change-password`, data);
 
   getUserDetail = () => {
     const token = this.getToken();
@@ -79,6 +93,9 @@ export class AuthService {
 
   getAll = (): Observable<UserDetail[]> =>
     this.http.get<UserDetail[]>(`${this.apiUrl}account`);
+
+  getAllSelect = (): Observable<UserDetailAll[]> =>
+    this.http.get<UserDetailAll[]>(`${this.apiUrl}account/all`);
 
   getToken = (): string | null => localStorage.getItem(this.tokenKey) || '';
 }
